@@ -18,7 +18,6 @@ const game = {
   ],
 };
 // console.dir(pokemon, { maxArrayLength: null });
-console.log(game);
 
 /*
 Exercise 3
@@ -28,6 +27,7 @@ Exercise 3
 
 Solve Exercise 3 here:
 */
+game.difficulty = "easy";
 
 /*
 Exercise 4
@@ -37,7 +37,8 @@ Exercise 4
 
 Solve Exercise 4 here:
 */
-
+starter = pokemon[3];
+game.party.push(starter);
 /*
 Exercise 5
 1. Choose three more Pokémon from the `pokemon` array and add them to your party.
@@ -46,6 +47,7 @@ Exercise 5
 
 Solve Exercise 5 here:
 */
+game.party.push(pokemon[14], pokemon[22], pokemon[37]);
 
 /*
 Exercise 6
@@ -55,7 +57,15 @@ Exercise 6
 
 Solve Exercise 6 here:
 */
-
+for (i = 0; i <= game.gyms.length; i++) {
+  if (game.gyms[i].difficulty <= 3) {
+    game.gyms[i].completed = true;
+  }
+  if (game.gyms[i].difficulty >= 3) {
+    break;
+  }
+}
+console.log(game);
 /*
 Exercise 7
 1. Evolve the starter Pokémon you added to your party earlier. Each starter Pokémon evolves into a specific one.
@@ -72,7 +82,7 @@ More Hints: The existing starter Pokemon will be *replaced* in your party with t
 
 Solve Exercise 7 here:
 */
-
+game.party[0] = pokemon[4];
 /*
 Exercise 8
 1. Print the name of each Pokémon in your party.
@@ -80,7 +90,9 @@ Exercise 8
 
 Solve Exercise 8 here:
 */
-
+for (i = 0; i <= game.party.length; i++) {
+  console.log(game.party[i]);
+}
 /*
 Exercise 9
 1. Can you print out all the starter Pokémon from the `pokemon` array?
@@ -89,6 +101,17 @@ Exercise 9
 
 Solve Exercise 9 here:
 */
+count = 0;
+for (i = 0; i < pokemon.length; i++) {
+  if (pokemon[i].starter === true) {
+    console.log(pokemon[i].name);
+    count += 1;
+  }
+  if (count >= 4) {
+    break;
+  }
+}
+
 /*
 Exercise 10
 Create a method called `catchPokemon` and add it to the `game` object. You should not need to edit the original game object directly. This method should:
@@ -100,6 +123,11 @@ After writing this method, call it and pass in a Pokemon object of your choice f
 
 Solve Exercise 10 here:
 */
+game.catchPokemon = function (pokemonObj) {
+  game.party.push(pokemonObj);
+};
+game.catchPokemon(pokemon[150]);
+console.log(game.party);
 /*
 Exercise 11
 1. Copy the `catchPokemon` method that you just wrote above, and paste it below. Modify it so that it also decreases the number of pokeballs in your inventory each time you catch a Pokémon.
@@ -112,7 +140,10 @@ Also, log the `game.items` array to confirm that the pokeball quantity is being 
 
 Solve Exercise 11 here:
 */
-
+game.catchPokemon = function (pokemonObj) {
+  game.party.push(pokemonObj);
+  game.items[1].quantity -= 1;
+};
 /*
 Exercise 12
 1. Similar to Exercise 6, now complete gyms with a difficulty below 6. How will you approach this?
@@ -120,7 +151,14 @@ Exercise 12
 
 Solve Exercise 12 here:
 */
-
+for (i = 0; i <= game.gyms.length; i++) {
+  if (game.gyms[i].difficulty <= 6) {
+    game.gyms[i].completed = true;
+  }
+  if (game.gyms[i].difficulty >= 6) {
+    break;
+  }
+}
 /*
 Exercise 13
 1. Create a `gymStatus` method in `game` to tally completed and incomplete gyms.
@@ -143,6 +181,22 @@ For example, if five gym objects have a value of `true` on their `completed` pro
 
 Solve Exercise 13 here:
 */
+game.gymStatus = function () {
+  gymTalley = {
+    completed: 0,
+    incomplete: 0,
+  };
+  console.log(gymTalley.completed);
+  for (i = 0; i < game.gyms.length; i++) {
+    if (game.gyms[i].completed === true) {
+      gymTalley.completed += 1;
+    } else {
+      gymTalley.incomplete += 1;
+    }
+  }
+  console.log(gymTalley);
+};
+game.gymStatus();
 /*
 Exercise 14
 1. Add a `partyCount` method to `game` that counts the number of Pokémon in your party.
@@ -154,6 +208,14 @@ This method should:
 
 Solve Exercise 14 here:
 */
+game.partyCount = function () {
+  count = 0;
+  for (i = 0; i < game.party.length; i++) {
+    count += 1;
+  }
+  return count;
+};
+game.partyCount();
 /*
 Exercise 15
 1. Now, complete gyms with a difficulty below 8. Reflect on how this is similar to or different from the previous gym exercises.
@@ -161,6 +223,14 @@ Exercise 15
 
 Solve Exercise 15 here:
 */
+for (i = 0; i <= game.gyms.length; i++) {
+  if (game.gyms[i].difficulty <= 8) {
+    game.gyms[i].completed = true;
+  }
+  if (game.gyms[i].difficulty >= 8) {
+    break;
+  }
+}
 /*
 Exercise 16
 1. Log the entire `game` object to the console. Take a moment to review the changes you've made throughout the exercises.
@@ -168,7 +238,7 @@ Exercise 16
 
 Solve Exercise 16 here:
 */
-
+console.log(game);
 /*
 Exercise 17
 1. Arrange the Pokémon in `game.party` by their HP. The one with the highest HP should come first.
